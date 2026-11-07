@@ -1,12 +1,12 @@
 ---
-name: minimaps
-description: Add static map images to an app with the Minimaps API, such as locator maps (an area highlighted and its surroundings faded), labeled points, route or flight lines, and neighboring-country labels. Covers building <img> GET URLs or POST JSON map specs, signing URLs with publishable keys, using the @minimaps/sdk (TypeScript) or minimaps (Python) SDKs, and handling ambiguous or unknown place names. Use when the user wants a locator map, a "where is X" map, a static map image, or a route map picture, or is working with the Minimaps API, its map spec, its API keys or its SDKs.
+name: wherebox
+description: Add static map images to an app with the Wherebox API, such as locator maps (an area highlighted and its surroundings faded), labeled points, route or flight lines, and neighboring-country labels. Covers building <img> GET URLs or POST JSON map specs, signing URLs with publishable keys, using the @wherebox/sdk (TypeScript) or wherebox (Python) SDKs, and handling ambiguous or unknown place names. Use when the user wants a locator map, a "where is X" map, a static map image, or a route map picture, or is working with the Wherebox API, its map spec, its API keys or its SDKs.
 license: MIT
 ---
 
-# Minimaps
+# Wherebox
 
-Minimaps is an HTTP API that returns one PNG, JPEG or WebP image per map. A map is described once, as a **MapSpec**. You can send it as GET query parameters (`/v1/map.png?area=Czechia&w=468&h=280`) or as a JSON body to `POST /v1/map`. Both forms describe the same spec.
+Wherebox is an HTTP API that returns one PNG, JPEG or WebP image per map. A map is described once, as a **MapSpec**. You can send it as GET query parameters (`/v1/map.png?area=Czechia&w=468&h=280`) or as a JSON body to `POST /v1/map`. Both forms describe the same spec.
 
 Load these on demand:
 - [reference/parameters.md](reference/parameters.md): every GET parameter and POI option, with values, defaults and examples, plus POST-only fields and limits.
@@ -17,9 +17,9 @@ Load these on demand:
 ## 1. Look at the project first
 
 Before writing code, check these:
-- **Base URL.** Look for an existing setting (for example `MINIMAPS_URL`). It is either the hosted service or a self-hosted server. Never invent a production host. If none is configured, ask the user.
-- **Keys.** The hosted service uses keys; a self-hosted server with `MINIMAPS_AUTH=none` (the default) needs none. Look for environment variables holding an `sk_` secret key, or a `pk_` publishable key with its signing secret. Read keys from the environment. Never hard-code them.
-- **SDK.** If `@minimaps/sdk` is in `package.json`, or `minimaps` is in the Python dependencies, use it. The SDK builds URLs from the spec, signs them, and turns errors into one class with a `code`. Without an SDK, build URLs with the platform's URL/query encoder, never by string concatenation.
+- **Base URL.** Look for an existing setting (for example `WHEREBOX_URL`). It is either the hosted service or a self-hosted server. Never invent a production host. If none is configured, ask the user.
+- **Keys.** The hosted service uses keys; a self-hosted server with `WHEREBOX_AUTH=none` (the default) needs none. Look for environment variables holding an `sk_` secret key, or a `pk_` publishable key with its signing secret. Read keys from the environment. Never hard-code them.
+- **SDK.** If `@wherebox/sdk` is in `package.json`, or `wherebox` is in the Python dependencies, use it. The SDK builds URLs from the spec, signs them, and turns errors into one class with a `code`. Without an SDK, build URLs with the platform's URL/query encoder, never by string concatenation.
 - **Where the request runs.** It is either server code (it can hold secrets) or browser/mobile code (anything in it is public).
 
 ## 2. GET URL or POST body

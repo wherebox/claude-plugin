@@ -16,7 +16,7 @@
 
 ## Auth parameters
 
-Accepted on every `/v1/map` request in addition to the map parameters. A server without API keys (`MINIMAPS_AUTH=none`, the self-hosted default) accepts and ignores them, so the same URLs work against both.
+Accepted on every `/v1/map` request in addition to the map parameters. A server without API keys (`WHEREBOX_AUTH=none`, the self-hosted default) accepts and ignores them, so the same URLs work against both.
 
 | Parameter | Description | Example |
 |---|---|---|

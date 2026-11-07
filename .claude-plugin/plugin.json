@@ -1,17 +1,17 @@
 {
-  "name": "minimaps",
-  "description": "Teaches Claude Code to add Minimaps static locator-map images to apps: GET <img> URLs vs POST specs, signed URLs with publishable keys, the TypeScript and Python SDKs, and ambiguous-name handling.",
+  "name": "wherebox",
+  "description": "Teaches Claude Code to add Wherebox static locator-map images to apps: GET <img> URLs vs POST specs, signed URLs with publishable keys, the TypeScript and Python SDKs, and ambiguous-name handling.",
   "author": {
-    "name": "Minimaps contributors"
+    "name": "Wherebox contributors"
   },
   "license": "MIT",
   "keywords": [
     "maps",
     "locator-map",
     "static-map",
-    "minimaps",
+    "wherebox",
     "skill"
   ],
-  "homepage": "https://github.com/agilek/minimaps-claude-plugin",
-  "repository": "https://github.com/agilek/minimaps-claude-plugin"
+  "homepage": "https://github.com/wherebox/claude-plugin",
+  "repository": "https://github.com/wherebox/claude-plugin"
 }

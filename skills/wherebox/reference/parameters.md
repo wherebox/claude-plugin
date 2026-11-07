@@ -115,7 +115,7 @@ Language and font of everything drawn on top of the basemap.
 | Parameter | JSON field | Value | Default | Description | Example |
 |---|---|---|---|---|---|
 | `lang` | `lang` | string | — | Label language (ISO 639-1). Default: local names (Deutschland, Polska), as on Wikipedia locator maps. | `lang=en` |
-| `font` | `font.family` | `noto-sans` \| `noto-serif` \| `noto-sans-mono` | `noto-sans` | A bundled family, or your own TTF/OTF/WOFF as a `data:` URI or an https URL on an allowed host (`MINIMAPS_FONT_HOSTS`). Missing glyphs fall back to Noto Sans, then Noto Sans Mono. Bundled families only in GET; custom fonts via POST. | `font=noto-serif` |
+| `font` | `font.family` | `noto-sans` \| `noto-serif` \| `noto-sans-mono` | `noto-sans` | A bundled family, or your own TTF/OTF/WOFF as a `data:` URI or an https URL on an allowed host (`WHEREBOX_FONT_HOSTS`). Missing glyphs fall back to Noto Sans, then Noto Sans Mono. Bundled families only in GET; custom fonts via POST. | `font=noto-serif` |
 | `fontweight` | `font.weight` | integer, 100–900 | `400` | Weight for all labels (100–900; the nearest bundled weight is used). | `fontweight=600` |
 
 ## Title band
@@ -149,7 +149,7 @@ A `poi` value is a location followed by `|key:value` options: `lat,lon|label:Ch�
 | `size` | `pois[].marker.size` | number, 4–64 | — | Marker height in CSS pixels (multiplied by `scale`). Default depends on the shape. | `size:14` |
 | `stroke` | `pois[].marker.strokeColor` | string | — | Outline color (default white where the shape has an outline). | `stroke:#ffffff` |
 | `strokewidth` | `pois[].marker.strokeWidth` | number, 0–8 | — | Outline width in px; 0 = none. `dot` and `pin` have a thin default outline. | `strokewidth:1.5` |
-| `icon` | `pois[].marker.icon` | string | — | Custom icon instead of the shape: an SVG/PNG `data:` URI, or an https URL on a host the server allows (`MINIMAPS_ICON_HOSTS`). SVGs with external references or scripts are rejected. URL-encode the value (base64 contains `+`, `/` and `=`). | `icon:data:image/svg+xml;base64,PHN2Zy8+` |
+| `icon` | `pois[].marker.icon` | string | — | Custom icon instead of the shape: an SVG/PNG `data:` URI, or an https URL on a host the server allows (`WHEREBOX_ICON_HOSTS`). SVGs with external references or scripts are rejected. URL-encode the value (base64 contains `+`, `/` and `=`). | `icon:data:image/svg+xml;base64,PHN2Zy8+` |
 | `anchor` | `pois[].marker.anchor` | `center` \| `bottom` | — | Which point of a custom icon sits on the location: its center, or its bottom edge (pin-shaped icons). | `anchor:bottom` |
 
 ## POST-only

@@ -1,8 +1,8 @@
 # Recipes
 
-Working code for the common integrations. The TypeScript snippets are type-checked against `@minimaps/sdk`, the Python snippets are checked against the `minimaps` package, and every request example is parsed with the map spec in this skill's CI.
+Working code for the common integrations. The TypeScript snippets are type-checked against `@wherebox/sdk`, the Python snippets are checked against the `wherebox` package, and every request example is parsed with the map spec in this skill's CI.
 
-Install the SDKs with `npm install @minimaps/sdk` (TypeScript, Node 20+, browsers and edge runtimes) or `pip install minimaps` (Python 3.9+, no dependencies).
+Install the SDKs with `npm install @wherebox/sdk` (TypeScript, Node 20+, browsers and edge runtimes) or `pip install wherebox` (Python 3.9+, no dependencies).
 
 ## TypeScript: a signed `<img>` URL from a server route
 
@@ -10,12 +10,12 @@ Create the client on the server with the publishable key and its signing secret.
 
 <!-- snippet: ts-skill-signed-img -->
 ```ts
-import { createClient, MinimapsError, PostOnlyError } from '@minimaps/sdk';
+import { createClient, WhereboxError, PostOnlyError } from '@wherebox/sdk';
 
-const minimaps = createClient({
-  baseUrl: process.env.MINIMAPS_URL ?? 'https://maps.example.com',
-  publishableKey: process.env.MINIMAPS_PUBLISHABLE_KEY,
-  signingSecret: process.env.MINIMAPS_SIGNING_SECRET, // server only, never in a client bundle
+const wherebox = createClient({
+  baseUrl: process.env.WHEREBOX_URL ?? 'https://maps.example.com',
+  publishableKey: process.env.WHEREBOX_PUBLISHABLE_KEY,
+  signingSecret: process.env.WHEREBOX_SIGNING_SECRET, // server only, never in a client bundle
 });
 
 // e.g. app/api/map-url/route.ts (any framework with web-standard Request/Response)
@@ -26,14 +26,14 @@ export async function GET(request: Request): Promise<Response> {
     // Round the expiry so repeated views reuse one URL (and one cached image).
     const hour = 3600;
     const expiresIn = hour - (Math.floor(Date.now() / 1000) % hour) + hour;
-    const src = await minimaps.url(
+    const src = await wherebox.url(
       { area, pois: [{ place: 'Brno', label: 'Our office' }], width: 468, height: 280, scale: 2 },
       { format: 'webp', expiresIn },
     );
     return Response.json({ src, width: 468, height: 280 });
   } catch (err) {
     if (err instanceof PostOnlyError) return Response.json({ error: err.message }, { status: 400 });
-    if (err instanceof MinimapsError) return Response.json({ error: err.message }, { status: 400 });
+    if (err instanceof WhereboxError) return Response.json({ error: err.message }, { status: 400 });
     throw err;
   }
 }
@@ -53,11 +53,11 @@ GET /v1/map.webp?area=Czechia&poi=place:Brno|label:Our+office&w=468&h=280&scale=
 <!-- snippet: ts-skill-render-names -->
 ```ts
 import { writeFile } from 'node:fs/promises';
-import { createClient, MinimapsError } from '@minimaps/sdk';
+import { createClient, WhereboxError } from '@wherebox/sdk';
 
-const minimaps = createClient({
-  baseUrl: process.env.MINIMAPS_URL ?? 'https://maps.example.com',
-  secretKey: process.env.MINIMAPS_SECRET_KEY, // header only, never in a URL
+const wherebox = createClient({
+  baseUrl: process.env.WHEREBOX_URL ?? 'https://maps.example.com',
+  secretKey: process.env.WHEREBOX_SECRET_KEY, // header only, never in a URL
 });
 
 type Outcome =
@@ -67,11 +67,11 @@ type Outcome =
 
 export async function renderArea(area: string, file: string): Promise<Outcome> {
   try {
-    const { image } = await minimaps.render({ area, width: 468, height: 280 });
+    const { image } = await wherebox.render({ area, width: 468, height: 280 });
     await writeFile(file, image);
     return { kind: 'ok', file };
   } catch (err) {
-    if (!(err instanceof MinimapsError)) throw err;
+    if (!(err instanceof WhereboxError)) throw err;
     if (err.code === 'ambiguous') {
       // Let the user pick, then call renderArea(option.ref, file) and store the ref, not the name.
       return { kind: 'choose', options: (err.candidates ?? []).map((c) => ({ ref: c.ref, label: `${c.name} (${c.context ?? c.adminLevel})` })) };
@@ -107,13 +107,13 @@ Picking a candidate by its `ref`:
 ```python
 import os
 
-from minimaps import Client, MinimapsError, PostOnlyError
+from wherebox import Client, WhereboxError, PostOnlyError
 
 client = Client(
-    os.environ.get("MINIMAPS_URL", "https://maps.example.com"),
-    secret_key=os.environ.get("MINIMAPS_SECRET_KEY"),            # server-side render()
-    publishable_key=os.environ.get("MINIMAPS_PUBLISHABLE_KEY"),  # embeds
-    signing_secret=os.environ.get("MINIMAPS_SIGNING_SECRET"),    # never sent to a browser
+    os.environ.get("WHEREBOX_URL", "https://maps.example.com"),
+    secret_key=os.environ.get("WHEREBOX_SECRET_KEY"),            # server-side render()
+    publishable_key=os.environ.get("WHEREBOX_PUBLISHABLE_KEY"),  # embeds
+    signing_secret=os.environ.get("WHEREBOX_SIGNING_SECRET"),    # never sent to a browser
 )
 
 spec = {
@@ -135,7 +135,7 @@ def img_src(spec):
 def render_png(spec, path):
     try:
         result = client.render(spec)
-    except MinimapsError as err:
+    except WhereboxError as err:
         if err.code == "ambiguous":
             return [(c["ref"], c.get("context")) for c in err.candidates]  # let the user pick
         if err.code == "not-found":
@@ -164,8 +164,8 @@ The same spec as a body:
 Send the secret key in the header and the spec as JSON:
 
 ```bash
-curl -fsS -X POST "$MINIMAPS_URL/v1/map" \
-  -H "Authorization: Bearer $MINIMAPS_SECRET_KEY" \
+curl -fsS -X POST "$WHEREBOX_URL/v1/map" \
+  -H "Authorization: Bearer $WHEREBOX_SECRET_KEY" \
   -H "Content-Type: application/json" \
   -d '{"area":"Czechia","width":468,"height":280}' -o czechia.png
 ```

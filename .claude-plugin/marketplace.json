@@ -1,12 +1,12 @@
 {
-  "name": "minimaps",
-  "description": "The Minimaps Agent Skill for Claude Code.",
-  "owner": { "name": "Minimaps contributors" },
+  "name": "wherebox",
+  "description": "The Wherebox Agent Skill for Claude Code.",
+  "owner": { "name": "Wherebox contributors" },
   "plugins": [
     {
-      "name": "minimaps",
+      "name": "wherebox",
       "source": "./",
-      "description": "Add Minimaps static locator-map images to apps the right way: signed URLs, SDKs and error handling.",
+      "description": "Add Wherebox static locator-map images to apps the right way: signed URLs, SDKs and error handling.",
       "category": "development"
     }
   ]
