@@ -2,6 +2,8 @@
 
 Working code for the common integrations. The TypeScript snippets are type-checked against `@minimaps/sdk`, the Python snippets are checked against the `minimaps` package, and every request example is parsed with the map spec in this skill's CI.
 
+Install the SDKs with `npm install @minimaps/sdk` (TypeScript, Node 20+, browsers and edge runtimes) or `pip install minimaps` (Python 3.9+, no dependencies).
+
 ## TypeScript: a signed `<img>` URL from a server route
 
 Create the client on the server with the publishable key and its signing secret. `url()` then adds `apikey`, `exp` and `sig`. The browser only ever receives the finished URL.
