@@ -1,0 +1,17 @@
+{
+  "name": "minimaps",
+  "description": "Teaches Claude Code to add Minimaps static locator-map images to apps: GET <img> URLs vs POST specs, signed URLs with publishable keys, the TypeScript and Python SDKs, and ambiguous-name handling.",
+  "author": {
+    "name": "Minimaps contributors"
+  },
+  "license": "MIT",
+  "keywords": [
+    "maps",
+    "locator-map",
+    "static-map",
+    "minimaps",
+    "skill"
+  ],
+  "homepage": "https://github.com/agilek/minimaps-claude-plugin",
+  "repository": "https://github.com/agilek/minimaps-claude-plugin"
+}
